@@ -37,7 +37,6 @@ export default function NavButtons() {
                     <Row>
                         <Col xs="auto">
                             <Button type="submit">Import</Button>
-                            <p>{count}</p>
                         </Col>
                         <Col xs="auto">
                             <Button type="submit">Download</Button>

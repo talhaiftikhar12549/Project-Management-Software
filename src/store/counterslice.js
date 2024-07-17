@@ -1,8 +1,39 @@
 import {createSlice} from '@reduxjs/toolkit'
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
+
 const initialState = {
     value: 69,
     task: [
+        {
+            id: uuidv4(),
+            name: "ddas",
+            description: "asd",
+            assignee: "sadsa",
+            dueDate: "asdsa",
+            status: "sada",
+            timeSpent: "dsad",
+            priority: "sadsa"
+        },
+        {
+            id: uuidv4(),
+            name: "ddas",
+            description: "asd",
+            assignee: "sadsa",
+            dueDate: "asdsa",
+            status: "sada",
+            timeSpent: "dsad",
+            priority: "sadsa"
+        },
+        {
+            id: uuidv4(),
+            name: "ddas",
+            description: "asd",
+            assignee: "sadsa",
+            dueDate: "asdsa",
+            status: "sada",
+            timeSpent: "dsad",
+            priority: "sadsa"
+        }
     ],
 }
 
@@ -25,7 +56,7 @@ export const counterSlice = createSlice({
         },
         addTask: (state, action) => {
             const data = action.payload
-            console.log('Payload received in addTask:',data);
+            console.log('Payload received in addTask:', data);
             state.task.unshift(data); // Adding task to the array
             console.log('Updated task array:', state.task);
 
