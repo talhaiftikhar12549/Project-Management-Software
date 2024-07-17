@@ -5,9 +5,13 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
-import {useState} from 'react';
-
+import {useState, useRef} from 'react';
+import { useForm } from "react-hook-form";
 export default function NavButtons() {
+    const { register,reset, handleSubmit, watch, formState: { errors } } = useForm();
+    const onSubmit = (data) => {console.log(data); reset()};
+
+    // console.log(watch("example")); // watch input value by passing the name of it
 
     const [show, setShow] = useState(false);
 
@@ -36,14 +40,22 @@ export default function NavButtons() {
             {/*Add Task Modal Start*/}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Add Task</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+                <Modal.Body>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <input {...register("Name" , { required: true })} />
+                        <br/><br/>
+                        <input {...register("Password", { required: true })} />
+                        {errors.exampleRequired && <span>This field is required</span>}
+                        <br/>
+                    </form>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleSubmit(onSubmit)}>
                         Save Changes
                     </Button>
                 </Modal.Footer>
