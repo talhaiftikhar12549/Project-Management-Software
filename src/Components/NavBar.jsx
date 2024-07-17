@@ -1,10 +1,7 @@
-import React from "react"
-import Nav from 'react-bootstrap/Nav';
-
 export default function NavBar() {
     return (
         <>
-            <div className="text-center bg-body-tertiary fw-semibold" >
+            <div className="text-center bg-body-tertiary fw-semibold">
                 {/*<div className="row " style="max-width: 100%;">*/}
                 <div className={"row"}>
                     <div className="col py-2 border">

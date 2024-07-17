@@ -1,17 +1,25 @@
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
-import {useState, useRef} from 'react';
-import { useForm } from "react-hook-form";
-export default function NavButtons() {
-    const { register,reset, handleSubmit, watch, formState: { errors } } = useForm();
-    const onSubmit = (data) => {console.log(data); reset()};
+import { useSelector, useDispatch } from 'react-redux'
+import { decrement, increment, addTask } from '../store/counterslice'
+import {useState} from 'react';
+import {useForm} from "react-hook-form";
 
-    // console.log(watch("example")); // watch input value by passing the name of it
+export default function NavButtons() {
+    const count = useSelector((state) => state.counter.value)
+    const dispatch = useDispatch()
+
+    const {register, reset, handleSubmit, formState: {errors}} = useForm();
+    const onSubmit = (data) => {
+        // console.log(data)
+        dispatch(addTask(data))
+        reset()
+    };
+
 
     const [show, setShow] = useState(false);
 
@@ -29,6 +37,7 @@ export default function NavButtons() {
                     <Row>
                         <Col xs="auto">
                             <Button type="submit">Import</Button>
+                            <p>{count}</p>
                         </Col>
                         <Col xs="auto">
                             <Button type="submit">Download</Button>
@@ -44,11 +53,43 @@ export default function NavButtons() {
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        <input {...register("Name" , { required: true })} />
-                        <br/><br/>
-                        <input {...register("Password", { required: true })} />
+                        <Form.Control
+                            {...register("Name", {required: true})}
+                            placeholder={"Name"}
+                        />
+                        <br/>
+                        <Form.Control
+                            {...register("Description", {required: true})}
+                            placeholder={"Description"}
+                        />
                         {errors.exampleRequired && <span>This field is required</span>}
                         <br/>
+                        <Form.Control
+                            {...register("Assignee", {required: true})}
+                            placeholder={"Assignee"}
+                        />
+                        <br/>
+                        <Form.Control
+                            type="date"
+                            {...register("Due Date", {required: true})}
+                            placeholder={"Due Date"}
+                        />
+                        <br/>
+                        <Form.Control
+                            {...register("Status", {required: true})}
+                            placeholder={"Status"}
+                        />
+                        <br/>
+                        <Form.Control
+                            type="number"
+                            {...register("Spend Time", {required: true})}
+                            placeholder={"Spend Time in Hours"}
+                        />
+                        <br/>
+                        <Form.Control
+                            {...register("Priority", {required: true})}
+                            placeholder={"Priority"}
+                        />
                     </form>
                 </Modal.Body>
                 <Modal.Footer>
