@@ -4,36 +4,36 @@ import {v4 as uuidv4} from 'uuid';
 const initialState = {
     value: 69,
     task: [
-        // {
-        //     id: uuidv4(),
-        //     name: "Nav Bar issue",
-        //     description: "Nav Bar Not Found",
-        //     assignee: "Kamran",
-        //     dueDate: "2days",
-        //     status: "backlog",
-        //     timeSpent: "3",
-        //     priority: "low",
-        // },
-        // {
-        //     id: uuidv4(),
-        //     name: "css file",
-        //     description: "css file not found",
-        //     assignee: "fateh",
-        //     dueDate: "3days",
-        //     status: "backlog",
-        //     timeSpent: "3",
-        //     priority: "high",
-        // },
-        // {
-        //     id: uuidv4(),
-        //     name: "div not centered",
-        //     description: "div not centerd in the page",
-        //     assignee: "muneeb",
-        //     dueDate: "1day",
-        //     status: "backlog",
-        //     timeSpent: "6",
-        //     priority: "urgent",
-        // }
+        {
+            id: uuidv4(),
+            name: "Nav Bar issue",
+            description: "Nav Bar Not Found",
+            assignee: "Kamran",
+            dueDate: "2days",
+            status: "backlog",
+            timeSpent: "3",
+            priority: "Low",
+        },
+        {
+            id: uuidv4(),
+            name: "css file",
+            description: "css file not found",
+            assignee: "fateh",
+            dueDate: "3days",
+            status: "backlog",
+            timeSpent: "3",
+            priority: "High",
+        },
+        {
+            id: uuidv4(),
+            name: "div not centered",
+            description: "div not centerd in the page",
+            assignee: "muneeb",
+            dueDate: "1day",
+            status: "backlog",
+            timeSpent: "6",
+            priority: "Urgent",
+        }
     ],
 }
 
@@ -56,8 +56,9 @@ export const counterSlice = createSlice({
         },
         addTask: (state, action) => {
             const data = action.payload
-            console.log('Payload received in addTask:', data);
-            state.task.unshift(data); // Adding task to the array
+            const newdata = { id:uuidv4(), ...data }
+            console.log('Payload received in addTask:', newdata);
+            state.task.unshift(newdata); // Adding task to the array
             console.log('Updated task array:', state.task);
         },
         downloadJson(state) {

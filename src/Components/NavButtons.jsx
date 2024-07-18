@@ -13,21 +13,28 @@ export default function NavButtons() {
     const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
 
+
+    //Download Button Start
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = (data) => {
         // console.log(data)
         dispatch(addTask(data))
         reset()
     };
+    //Download Button Ends
 
 
+    //Modal Show
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    //Modal Show
+
 
     //File IMporting Button Start
     const fileInputRef = useRef(null);
+
     function triggerFileInput() {
         //fileInput.click();
         fileInputRef.current.click();
@@ -54,6 +61,7 @@ export default function NavButtons() {
 
     //File Importing Button ends
 
+
     return (
         <>
             {/*Button Bar Start*/}
@@ -64,11 +72,11 @@ export default function NavButtons() {
                 <div>
                     <Row>
                         <Col xs="auto">
-                            {/*<Button type="submit">Import</Button>*/}
                             <button className={"btn btn-primary"} onClick={triggerFileInput}>
                                 Import file
                             </button>
-                            <input type={"file"} ref={fileInputRef} onChange={handleFileUpload} style={{display:"none", }}/>
+                            <input type={"file"} ref={fileInputRef} onChange={handleFileUpload}
+                                   style={{display: "none",}}/>
                         </Col>
                         <Col xs="auto">
                             <Button type="submit" onClick={() => dispatch(downloadJson())}>Download</Button>
@@ -77,6 +85,8 @@ export default function NavButtons() {
                 </div>
             </Navbar>
             {/*Button Bar End*/}
+
+
             {/*Add Task Modal Start*/}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

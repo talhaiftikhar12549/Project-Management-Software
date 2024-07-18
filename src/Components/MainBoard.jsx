@@ -24,29 +24,60 @@ export default function MainBoard() {
     const ehandleClose = () => seteShow(false);
     const ehandleShow = () => seteShow(true);
 
-   // const editmodal=()=>(ehandleShow)
-        //handleClose
+    // const editmodal=()=>(ehandleShow)
 
-function shoeeditmodal()
-{
-    setShow(false)
-    seteShow(true)
-}
+
+    //handleClose
+
+    function shoeeditmodal() {
+        setShow(false)
+        seteShow(true)
+    }
+
+    function bgColor(priority) {
+        switch (priority) {
+            case 'Urgent':
+                return '#ffe2e4';
+            case 'High':
+                return '#ffdbbb';
+            case 'Low':
+                return '#d3fff0';
+            default:
+                return 'white';
+        }
+    }
 
 
 
     return (
         <>
-            <div className="text-center fw-semibold">
+            <div className="text-center ">
                 <div className={"row"}>
                     <div className="col py-2">
                         {taskData.map((task) => (
-                            <div className="border py-1 my-1" key={task.id} onClick={() => handleShow(task)}>
-                                <p>{task.name}</p>
-                                <p>{task.priority}</p>
-                                <p>{task.assignee}</p>
-                                <p>{task.dueDate}</p>
-                            </div>
+
+                                <div className="border py-1 my-1" key={task.id} onClick={() => handleShow(task)} style={{ backgroundColor: bgColor(task.priority) }} >
+                                    <div className="d-flex">
+                                        <div style={{width: '80%'}}>
+                                            <p style={{margin: '0px', textAlign: 'left'}}>{task.name}</p>
+                                            <p style={{margin: '0px', textAlign: 'left'}}>Priority: {task.priority}</p>
+                                        </div>
+                                        <div style={{
+                                            width: '20%',
+                                            paddingRight: '4px',
+                                            textAlign: 'left'
+                                        }}>{task.timeSpent}h
+                                        </div>
+                                    </div>
+                                    <div className="font-weight-normal" style={{
+                                        borderTop: '1px solid darkgrey',
+                                        textAlign: 'left'
+                                    }}>{task.assignee}</div>
+
+                                </div>
+
+
+
                         ))}
                     </div>
 
@@ -72,9 +103,10 @@ function shoeeditmodal()
                 {currentTask && (
                     <Modal show={show} onHide={handleClose}>
                         <Modal.Header closeButton>
-                            <Modal.Title>{currentTask.name}</Modal.Title>
+                            <Modal.Title>Task Details</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
+                            <h6>Name:</h6> {currentTask.name}
                             <h6>Description:</h6> {currentTask.description}
                             <h6>Due Date:</h6> {currentTask.dueDate}
                             <h6>Assignee:</h6>{currentTask.assignee}
