@@ -4,36 +4,36 @@ import {v4 as uuidv4} from 'uuid';
 const initialState = {
     value: 69,
     task: [
-        {
-            id: uuidv4(),
-            name: "Nav Bar issue",
-            description: "Nav Bar Not Found",
-            assignee: "Kamran",
-            dueDate: "2days",
-            status: "backlog",
-            timeSpent: "3",
-            priority: "low",
-        },
-        {
-            id: uuidv4(),
-            name: "css file",
-            description: "css file not found",
-            assignee: "fateh",
-            dueDate: "3days",
-            status: "backlog",
-            timeSpent: "3",
-            priority: "high",
-        },
-        {
-            id: uuidv4(),
-            name: "div not centered",
-            description: "div not centerd in the page",
-            assignee: "muneeb",
-            dueDate: "1day",
-            status: "backlog",
-            timeSpent: "6",
-            priority: "urgent",
-        }
+        // {
+        //     id: uuidv4(),
+        //     name: "Nav Bar issue",
+        //     description: "Nav Bar Not Found",
+        //     assignee: "Kamran",
+        //     dueDate: "2days",
+        //     status: "backlog",
+        //     timeSpent: "3",
+        //     priority: "low",
+        // },
+        // {
+        //     id: uuidv4(),
+        //     name: "css file",
+        //     description: "css file not found",
+        //     assignee: "fateh",
+        //     dueDate: "3days",
+        //     status: "backlog",
+        //     timeSpent: "3",
+        //     priority: "high",
+        // },
+        // {
+        //     id: uuidv4(),
+        //     name: "div not centered",
+        //     description: "div not centerd in the page",
+        //     assignee: "muneeb",
+        //     dueDate: "1day",
+        //     status: "backlog",
+        //     timeSpent: "6",
+        //     priority: "urgent",
+        // }
     ],
 }
 
@@ -60,8 +60,7 @@ export const counterSlice = createSlice({
             state.task.unshift(data); // Adding task to the array
             console.log('Updated task array:', state.task);
         },
-        downloadJson(state)
-        {
+        downloadJson(state) {
             const jsonString = JSON.stringify(state.task, null, 2);
             const blob = new Blob([jsonString], {type: "application/json"});
             const link = document.createElement("a");
@@ -70,11 +69,20 @@ export const counterSlice = createSlice({
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-        }
+        },
+        importFile(state, action) {
+            const newFileData = action.payload
+            console.log(newFileData)
+            // state.task.unshift(newFileData)
+            state.task = newFileData
+            console.log(state.task)
+            // debugger
+
+        },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {increment, decrement, incrementByAmount, addTask,downloadJson} = counterSlice.actions
+export const {increment, decrement, incrementByAmount, addTask, downloadJson, importFile} = counterSlice.actions
 
 export default counterSlice.reducer

@@ -5,8 +5,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import {useSelector, useDispatch} from 'react-redux'
-import {downloadJson, addTask} from '../store/counterslice'
-import {useState} from 'react';
+import {downloadJson, addTask, importFile} from '../store/counterslice'
+import {useState, useRef} from 'react';
 import {useForm} from "react-hook-form";
 
 export default function NavButtons() {
@@ -26,6 +26,33 @@ export default function NavButtons() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //File IMporting Button Start
+    const fileInputRef = useRef(null);
+    function triggerFileInput() {
+        //fileInput.click();
+        fileInputRef.current.click();
+    }
+
+    function handleFileUpload(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const json = JSON.parse(e.target.result);
+                    // Assuming the JSON structure matches your `form` structure
+                    dispatch(importFile(json))
+                    // this.$store.commit('setFormData', json);
+                } catch (error) {
+                    console.error("Invalid JSON file");
+                    alert("Please Upload Json file")
+                }
+            };
+            reader.readAsText(file);
+        }
+    }
+
+    //File Importing Button ends
 
     return (
         <>
@@ -37,10 +64,14 @@ export default function NavButtons() {
                 <div>
                     <Row>
                         <Col xs="auto">
-                            <Button type="submit">Import</Button>
+                            {/*<Button type="submit">Import</Button>*/}
+                            <button className={"btn btn-primary"} onClick={triggerFileInput}>
+                                Import file
+                            </button>
+                            <input type={"file"} ref={fileInputRef} onChange={handleFileUpload} style={{display:"none", }}/>
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit" onClick={() => dispatch(downloadJson())} >Download</Button>
+                            <Button type="submit" onClick={() => dispatch(downloadJson())}>Download</Button>
                         </Col>
                     </Row>
                 </div>
