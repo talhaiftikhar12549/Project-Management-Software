@@ -4,8 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
-import { useSelector, useDispatch } from 'react-redux'
-import { decrement, increment, addTask } from '../store/counterslice'
+import {useSelector, useDispatch} from 'react-redux'
+import {downloadJson, addTask} from '../store/counterslice'
 import {useState} from 'react';
 import {useForm} from "react-hook-form";
 
@@ -26,6 +26,7 @@ export default function NavButtons() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
     return (
         <>
             {/*Button Bar Start*/}
@@ -39,7 +40,7 @@ export default function NavButtons() {
                             <Button type="submit">Import</Button>
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit">Download</Button>
+                            <Button type="submit" onClick={() => dispatch(downloadJson())} >Download</Button>
                         </Col>
                     </Row>
                 </div>

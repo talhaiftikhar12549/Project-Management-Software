@@ -11,11 +11,30 @@ export default function MainBoard() {
     const [show, setShow] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
     const handleClose = () => setShow(false);
-    const EditModal = () => setShow(true);
+    // const EditModal = () => setShow(true);
     const handleShow = (task) => {
         setCurrentTask(task);
         setShow(true);
     };
+
+
+    //
+    const [eshow, seteShow] = useState(false);
+
+    const ehandleClose = () => seteShow(false);
+    const ehandleShow = () => seteShow(true);
+
+   // const editmodal=()=>(ehandleShow)
+        //handleClose
+
+function shoeeditmodal()
+{
+    setShow(false)
+    seteShow(true)
+}
+
+
+
     return (
         <>
             <div className="text-center fw-semibold">
@@ -67,16 +86,31 @@ export default function MainBoard() {
                             <Button variant="secondary" onClick={handleClose}>
                                 Close
                             </Button>
-                            <Button variant="primary" onClick={EditModal}>
+                            <Button variant="primary" onClick={shoeeditmodal}>
                                 Edit
                             </Button>
                         </Modal.Footer>
                     </Modal>
 
-
-                //    edit modal
-                    
                 )}
+
+
+                {/*    Edit Modal Start*/}
+                <Modal show={eshow} onHide={ehandleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Task</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={ehandleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={ehandleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+                {/*    Edit Modal End*/}
 
             </div>
         </>
