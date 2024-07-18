@@ -57,7 +57,6 @@ export const counterSlice = createSlice({
         addTask: (state, action) => {
             const data = action.payload
             const newData = { id:uuidv4(), ...data }
-            typeof(data);
             let reqData = [...state.task];
             reqData.unshift(newData);
             console.log('Payload received in addTask:', newData);

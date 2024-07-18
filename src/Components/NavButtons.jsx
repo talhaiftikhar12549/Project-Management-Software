@@ -17,7 +17,7 @@ export default function NavButtons() {
     //Download Button Start
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = (data) => {
-        // console.log(data)
+         console.log(data)
         dispatch(addTask(data))
         reset()
     };
@@ -32,7 +32,7 @@ export default function NavButtons() {
     //Modal Show
 
 
-    //File IMporting Button Start
+    //File Importing Button Start
     const fileInputRef = useRef(null);
 
     function triggerFileInput() {
