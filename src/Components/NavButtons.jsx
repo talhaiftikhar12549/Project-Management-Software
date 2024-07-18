@@ -95,40 +95,40 @@ export default function NavButtons() {
                 <Modal.Body>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Form.Control
-                            {...register("Name", {required: true})}
+                            {...register("name", {required: true})}
                             placeholder={"Name"}
                         />
                         <br/>
                         <Form.Control
-                            {...register("Description", {required: true})}
+                            {...register("description", {required: true})}
                             placeholder={"Description"}
                         />
                         {errors.exampleRequired && <span>This field is required</span>}
                         <br/>
                         <Form.Control
-                            {...register("Assignee", {required: true})}
+                            {...register("assignee", {required: true})}
                             placeholder={"Assignee"}
                         />
                         <br/>
                         <Form.Control
                             type="date"
-                            {...register("Due Date", {required: true})}
+                            {...register("dueDate", {required: true})}
                             placeholder={"Due Date"}
                         />
                         <br/>
                         <Form.Control
-                            {...register("Status", {required: true})}
+                            {...register("status", {required: true})}
                             placeholder={"Status"}
                         />
                         <br/>
                         <Form.Control
                             type="number"
-                            {...register("Spend Time", {required: true})}
+                            {...register("timeSpent", {required: true})}
                             placeholder={"Spend Time in Hours"}
                         />
                         <br/>
                         <Form.Control
-                            {...register("Priority", {required: true})}
+                            {...register("priority", {required: true})}
                             placeholder={"Priority"}
                         />
                     </form>

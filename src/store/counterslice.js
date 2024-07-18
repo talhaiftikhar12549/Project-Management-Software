@@ -56,9 +56,12 @@ export const counterSlice = createSlice({
         },
         addTask: (state, action) => {
             const data = action.payload
-            const newdata = { id:uuidv4(), ...data }
-            console.log('Payload received in addTask:', newdata);
-            state.task.unshift(newdata); // Adding task to the array
+            const newData = { id:uuidv4(), ...data }
+            typeof(data);
+            let reqData = [...state.task];
+            reqData.unshift(newData);
+            console.log('Payload received in addTask:', newData);
+            state.task = reqData; // Adding task to the array
             console.log('Updated task array:', state.task);
         },
         downloadJson(state) {
