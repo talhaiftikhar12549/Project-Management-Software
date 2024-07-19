@@ -5,8 +5,25 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {useForm} from "react-hook-form";
 import Form from "react-bootstrap/Form";
+import {DragDropContext} from 'react-beautiful-dnd';
 
 export default function MainBoard() {
+    //drag and drop start
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+    }
+
+    //drag and drop ends
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();
     const taskData = useSelector((state) => state.counter.task);
     const dispatch = useDispatch();
@@ -65,7 +82,8 @@ export default function MainBoard() {
                 <div className="row">
                     <div className="col py-2">
                         {taskData.map((task) => (
-                            <div className="border py-1 my-1" key={task.id} onClick={() => handleShow(task)}
+                            <div draggable="true" className="border py-1 my-1" key={task.id}
+                                 onClick={() => handleShow(task)}
                                  style={{backgroundColor: bgColor(task.priority)}}>
                                 <div className="d-flex">
                                     <div style={{width: '80%'}}>
@@ -85,7 +103,7 @@ export default function MainBoard() {
                     </div>
 
 
-                    <div className="col py-2 ">
+                    <div id="div2" className="col py-2 h-100 ">
                         meow
                     </div>
 
@@ -141,10 +159,10 @@ export default function MainBoard() {
                             </Modal.Header>
                             <Modal.Body>
                                 <Form onSubmit={handleSubmit(editSubmit)}>
-                                    <Form.Group style={{display:"none"}}>
+                                    <Form.Group style={{display: "none"}}>
                                         <Form.Label>ID</Form.Label>
                                         <Form.Control
-                                            {...register("id", {required: true ,} )}
+                                            {...register("id", {required: true,})}
                                             placeholder="ID"
                                         />
                                         {errors.editName && <span>This field is required</span>}
@@ -170,6 +188,7 @@ export default function MainBoard() {
                                     <Form.Group>
                                         <Form.Label>Due Date</Form.Label>
                                         <Form.Control
+                                            type="date"
                                             {...register("dueDate", {required: true})}
                                             placeholder="Due Date"
                                         />
@@ -185,7 +204,7 @@ export default function MainBoard() {
                                         {errors.editAssignee && <span>This field is required</span>}
                                     </Form.Group>
 
-                                    <Form.Group>
+                                    <Form.Group style={{display: "none"}}>
                                         <Form.Label>Status</Form.Label>
                                         <Form.Control
                                             {...register("status", {required: true})}
@@ -197,20 +216,28 @@ export default function MainBoard() {
                                     <Form.Group>
                                         <Form.Label>Time Spent</Form.Label>
                                         <Form.Control
+                                            type="number"
                                             {...register("timeSpent", {required: true})}
                                             placeholder="Time Spent"
                                         />
                                         {errors.editTimeSpent && <span>This field is required</span>}
                                     </Form.Group>
 
+
                                     <Form.Group>
                                         <Form.Label>Priority</Form.Label>
-                                        <Form.Control
+                                        <select
                                             {...register("priority", {required: true})}
-                                            placeholder="Priority"
-                                        />
-                                        {errors.editPriority && <span>This field is required</span>}
+                                            style={{padding: '5px 50px', borderRadius: '5px', width: '100%'}}
+                                        >
+                                            <option disabled value="">Select your Priority</option>
+                                            <option value="Low">Low</option>
+                                            <option value="High">High</option>
+                                            <option value="Urgent">Urgent</option>
+                                        </select>
+                                        {errors.priority && <span>This field is required</span>}
                                     </Form.Group>
+
 
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={ehandleClose}>
@@ -231,4 +258,11 @@ export default function MainBoard() {
         </>
     );
 }
+
+
+
+
+
+
+
 

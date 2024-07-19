@@ -17,7 +17,7 @@ export default function NavButtons() {
     //Download Button Start
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
     const onSubmit = (data) => {
-         console.log(data)
+        console.log(data)
         dispatch(addTask(data))
         reset()
     };
@@ -96,41 +96,49 @@ export default function NavButtons() {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Form.Control
                             {...register("name", {required: true})}
-                            placeholder={"Name"}
+                            placeholder={"Task Name"}
                         />
                         <br/>
                         <Form.Control
                             {...register("description", {required: true})}
-                            placeholder={"Description"}
+                            placeholder={"Task Description"}
                         />
                         {errors.exampleRequired && <span>This field is required</span>}
                         <br/>
                         <Form.Control
                             {...register("assignee", {required: true})}
-                            placeholder={"Assignee"}
+                            placeholder={"Task Assignee"}
                         />
                         <br/>
-                        <Form.Control
-                            type="date"
-                            {...register("dueDate", {required: true})}
-                            placeholder={"Due Date"}
-                        />
-                        <br/>
-                        <Form.Control
-                            {...register("status", {required: true})}
-                            placeholder={"Status"}
-                        />
+                        <Form.Group>
+                            <Form.Label>Due Date</Form.Label>
+                            <Form.Control
+                                type="date"
+                                {...register("dueDate", {required: true})}
+                                placeholder={"Due Date"}
+                            />
+                        </Form.Group>
                         <br/>
                         <Form.Control
                             type="number"
                             {...register("timeSpent", {required: true})}
-                            placeholder={"Spend Time in Hours"}
+                            placeholder={"Time Spent on Task in Hours"}
                         />
                         <br/>
-                        <Form.Control
-                            {...register("priority", {required: true})}
-                            placeholder={"Priority"}
-                        />
+
+                        <Form.Group>
+                            <Form.Label>Priority</Form.Label>
+                            <select
+                                {...register("priority", {required: true})}
+                                style={{padding: '5px 50px', borderRadius: '5px', width: '100%'}}
+                            >
+                                <option disabled value="">Select your Priority</option>
+                                <option value="Low">Low</option>
+                                <option value="High">High</option>
+                                <option value="Urgent">Urgent</option>
+                            </select>
+                            {errors.priority && <span>This field is required</span>}
+                        </Form.Group>
                     </form>
                 </Modal.Body>
                 <Modal.Footer>

@@ -4,37 +4,37 @@ import {v4 as uuidv4} from 'uuid';
 const initialState = {
     value: 69,
     task: JSON.parse(localStorage.getItem('localData')) || [
-    // task: [
-    //     {
-    //         id: uuidv4(),
-    //         name: "Nav Bar issue",
-    //         description: "Nav Bar Not Found",
-    //         assignee: "Kamran",
-    //         dueDate: "2days",
-    //         status: "backlog",
-    //         timeSpent: "3",
-    //         priority: "Low",
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         name: "css file",
-    //         description: "css file not found",
-    //         assignee: "fateh",
-    //         dueDate: "3days",
-    //         status: "backlog",
-    //         timeSpent: "3",
-    //         priority: "High",
-    //     },
-    //     {
-    //         id: uuidv4(),
-    //         name: "div not centered",
-    //         description: "div not centerd in the page",
-    //         assignee: "muneeb",
-    //         dueDate: "1day",
-    //         status: "backlog",
-    //         timeSpent: "6",
-    //         priority: "Urgent",
-    //     }
+        // task: [
+        //     {
+        //         id: uuidv4(),
+        //         name: "Nav Bar issue",
+        //         description: "Nav Bar Not Found",
+        //         assignee: "Kamran",
+        //         dueDate: "2days",
+        //         status: "backlog",
+        //         timeSpent: "3",
+        //         priority: "Low",
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         name: "css file",
+        //         description: "css file not found",
+        //         assignee: "fateh",
+        //         dueDate: "3days",
+        //         status: "backlog",
+        //         timeSpent: "3",
+        //         priority: "High",
+        //     },
+        //     {
+        //         id: uuidv4(),
+        //         name: "div not centered",
+        //         description: "div not centerd in the page",
+        //         assignee: "muneeb",
+        //         dueDate: "1day",
+        //         status: "backlog",
+        //         timeSpent: "6",
+        //         priority: "Urgent",
+        //     }
     ],
 }
 
@@ -57,7 +57,7 @@ export const counterSlice = createSlice({
         },
         addTask: (state, action) => {
             const data = action.payload
-            const newData = {id: uuidv4(), ...data}
+            const newData = {id: uuidv4(), status: "Backlog", ...data}
             let reqData = [...state.task];
             reqData.unshift(newData);
             state.task = reqData; // Adding task to the array
