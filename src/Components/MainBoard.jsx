@@ -5,30 +5,34 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import {useForm} from "react-hook-form";
 import Form from "react-bootstrap/Form";
-import {DragDropContext} from 'react-beautiful-dnd';
 
 export default function MainBoard() {
     const today = new Date().toISOString().split('T')[0];
 
-    //drag and drop start
-    function allowDrop(ev) {
-        ev.preventDefault();
-    }
+    const [dropIndicator, setDropIndicator] = useState(null);
+    const dispatch = useDispatch();
 
-    function drag(ev) {
-        ev.dataTransfer.setData("text", ev.target.id);
-    }
+    const handleDragStart = (e, taskId) => {
+        e.dataTransfer.setData('text/plain', taskId.toString());
+    };
 
-    function drop(ev) {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("text");
-        ev.target.appendChild(document.getElementById(data));
-    }
+    const handleDragEnd = (e) => {
+        e.dataTransfer.clearData();
+    };
 
-    //drag and drop ends
+    const handleDrop = (e, status) => {
+        e.preventDefault();
+        const taskId = e.dataTransfer.getData("text/plain");
+        dispatch(editData({id: taskId, status})); // Dispatch action to update task status
+    };
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+    };
+
     const {register, handleSubmit, setValue, formState: {errors}} = useForm();
     const taskData = useSelector((state) => state.counter.task);
-    const dispatch = useDispatch();
+
     const [show, setShow] = useState(false);
     const [currentTask, setCurrentTask] = useState(null);
     const [eshow, seteShow] = useState(false);
@@ -42,7 +46,7 @@ export default function MainBoard() {
     const ehandleClose = () => seteShow(false);
     const ehandleShow = () => {
         if (currentTask) {
-            setValue("id", currentTask.id)
+            setValue("id", currentTask.id);
             setValue("name", currentTask.name);
             setValue("description", currentTask.description);
             setValue("dueDate", currentTask.dueDate);
@@ -55,14 +59,36 @@ export default function MainBoard() {
     };
 
     const editSubmit = (data) => {
-        console.log(data);
         seteShow(false);
-        dispatch(editData(data))
+        dispatch(editData(data));
     };
 
     const showEditModal = () => {
         setShow(false);
         ehandleShow();
+    };
+
+    const renderTasks = (status) => {
+        return taskData.filter(task => task.status === status).map((task) => (
+            <div draggable="true" className="border py-1 my-1" key={task.id}
+                 onClick={() => handleShow(task)}
+                 onDragStart={(e) => handleDragStart(e, task.id)}
+                 onDragEnd={handleDragEnd}
+                 style={{backgroundColor: bgColor(task.priority)}}>
+                <div className="d-flex">
+                    <div style={{width: '80%'}}>
+                        <p style={{margin: '0px', textAlign: 'left'}}>{task.name}</p>
+                        <p style={{margin: '0px', textAlign: 'left'}}>Priority: {task.priority}</p>
+                    </div>
+                    <div style={{width: '20%', paddingRight: '4px', textAlign: 'left'}}>
+                        {task.timeSpent}h
+                    </div>
+                </div>
+                <div className="font-weight-normal" style={{borderTop: '1px solid darkgrey', textAlign: 'left'}}>
+                    {task.assignee}
+                </div>
+            </div>
+        ));
     };
 
     function bgColor(priority) {
@@ -82,50 +108,30 @@ export default function MainBoard() {
         <>
             <div className="text-center">
                 <div className="row">
-                    <div className="col py-2">
-                        {taskData.map((task) => (
-                            <div draggable="true" className="border py-1 my-1" key={task.id}
-                                 onClick={() => handleShow(task)}
-                                 style={{backgroundColor: bgColor(task.priority)}}>
-                                <div className="d-flex">
-                                    <div style={{width: '80%'}}>
-                                        <p style={{margin: '0px', textAlign: 'left'}}>{task.name}</p>
-                                        <p style={{margin: '0px', textAlign: 'left'}}>Priority: {task.priority}</p>
-                                    </div>
-                                    <div style={{width: '20%', paddingRight: '4px', textAlign: 'left'}}>
-                                        {task.timeSpent}h
-                                    </div>
-                                </div>
-                                <div className="font-weight-normal"
-                                     style={{borderTop: '1px solid darkgrey', textAlign: 'left'}}>
-                                    {task.assignee}
-                                </div>
-                            </div>
-                        ))}
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
+                        {renderTasks("Back log")}
                     </div>
-
-
-                    <div id="div2" className="col py-2 h-100 ">
-                        meow
+                    <div id="div2" className="col py-2 h-100" onDrop={(e) => handleDrop(e, "Open")}
+                         onDragOver={handleDragOver}>
+                        {renderTasks("Open")}
                     </div>
-
-                    <div className="col py-2 ">
-                        meow
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "New")} onDragOver={handleDragOver}>
+                        {renderTasks("New")}
                     </div>
-                    <div className="col py-2 ">
-                        meow
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "In Progress")} onDragOver={handleDragOver}>
+                        {renderTasks("In Progress")}
                     </div>
-                    <div className="col py-2 ">
-                        meow
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "FeedBack Needed")}
+                         onDragOver={handleDragOver}>
+                        {renderTasks("FeedBack Needed")}
                     </div>
-                    <div className="col py-2 ">
-                        meow
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "Ready For Testing")}
+                         onDragOver={handleDragOver}>
+                        {renderTasks("Ready For Testing")}
                     </div>
-                    <div className="col py-2 ">
-                        meow
+                    <div className="col py-2" onDrop={(e) => handleDrop(e, "QA In Progress")} onDragOver={handleDragOver}>
+                        {renderTasks("QA In Progress")}
                     </div>
-
-
                 </div>
 
                 {/* Show Modal Start */}
@@ -164,7 +170,7 @@ export default function MainBoard() {
                                     <Form.Group style={{display: "none"}}>
                                         <Form.Label>ID</Form.Label>
                                         <Form.Control
-                                            {...register("id", {required: true,})}
+                                            {...register("id", {required: true})}
                                             placeholder="ID"
                                         />
                                         {errors.editName && <span>This field is required</span>}
@@ -187,7 +193,6 @@ export default function MainBoard() {
                                         {errors.editDescription && <span>This field is required</span>}
                                     </Form.Group>
 
-
                                     <Form.Group>
                                         <Form.Label>Due Date</Form.Label>
                                         <Form.Control
@@ -198,7 +203,6 @@ export default function MainBoard() {
                                         />
                                         {errors.dueDate && <span>This field is required</span>}
                                     </Form.Group>
-
 
                                     <Form.Group>
                                         <Form.Label>Assignee</Form.Label>
@@ -235,7 +239,6 @@ export default function MainBoard() {
                                         {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
                                     </Form.Group>
 
-
                                     <Form.Group>
                                         <Form.Label>Priority</Form.Label>
                                         <select
@@ -249,7 +252,6 @@ export default function MainBoard() {
                                         </select>
                                         {errors.priority && <span>This field is required</span>}
                                     </Form.Group>
-
 
                                     <Modal.Footer>
                                         <Button variant="secondary" onClick={ehandleClose}>
@@ -270,11 +272,3 @@ export default function MainBoard() {
         </>
     );
 }
-
-
-
-
-
-
-
-
