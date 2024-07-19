@@ -3,37 +3,38 @@ import {v4 as uuidv4} from 'uuid';
 
 const initialState = {
     value: 69,
-    task: [
-        {
-            id: uuidv4(),
-            name: "Nav Bar issue",
-            description: "Nav Bar Not Found",
-            assignee: "Kamran",
-            dueDate: "2days",
-            status: "backlog",
-            timeSpent: "3",
-            priority: "Low",
-        },
-        {
-            id: uuidv4(),
-            name: "css file",
-            description: "css file not found",
-            assignee: "fateh",
-            dueDate: "3days",
-            status: "backlog",
-            timeSpent: "3",
-            priority: "High",
-        },
-        {
-            id: uuidv4(),
-            name: "div not centered",
-            description: "div not centerd in the page",
-            assignee: "muneeb",
-            dueDate: "1day",
-            status: "backlog",
-            timeSpent: "6",
-            priority: "Urgent",
-        }
+    task: JSON.parse(localStorage.getItem('localData')) || [
+    // task: [
+    //     {
+    //         id: uuidv4(),
+    //         name: "Nav Bar issue",
+    //         description: "Nav Bar Not Found",
+    //         assignee: "Kamran",
+    //         dueDate: "2days",
+    //         status: "backlog",
+    //         timeSpent: "3",
+    //         priority: "Low",
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         name: "css file",
+    //         description: "css file not found",
+    //         assignee: "fateh",
+    //         dueDate: "3days",
+    //         status: "backlog",
+    //         timeSpent: "3",
+    //         priority: "High",
+    //     },
+    //     {
+    //         id: uuidv4(),
+    //         name: "div not centered",
+    //         description: "div not centerd in the page",
+    //         assignee: "muneeb",
+    //         dueDate: "1day",
+    //         status: "backlog",
+    //         timeSpent: "6",
+    //         priority: "Urgent",
+    //     }
     ],
 }
 
@@ -59,9 +60,9 @@ export const counterSlice = createSlice({
             const newData = {id: uuidv4(), ...data}
             let reqData = [...state.task];
             reqData.unshift(newData);
-            console.log('Payload received in addTask:', newData);
             state.task = reqData; // Adding task to the array
-            console.log('Updated task array:', state.task);
+            const localData = JSON.stringify(state.task);
+            localStorage.setItem("localData", localData);
         },
         downloadJson(state) {
             const jsonString = JSON.stringify(state.task, null, 2);
@@ -75,31 +76,21 @@ export const counterSlice = createSlice({
         },
         importFile(state, action) {
             const newFileData = action.payload
-            console.log(newFileData)
             state.task = newFileData
-            console.log(state.task)
-
-
+            const localData = JSON.stringify(state.task);
+            localStorage.setItem("localData", localData);
         },
         editData: (state, action) => {
             const updatedTask = action.payload;
             const index = state.task.findIndex(task => task.id === updatedTask.id);
-console.log("index",index)
+            console.log("index", index)
             if (index !== -1) {
-                state.task[index] = { ...updatedTask };
+                state.task[index] = {...updatedTask};
+                const localData = JSON.stringify(state.task);
+                localStorage.setItem("localData", localData);
             }
-            debugger
+
         },
-        // editData(state, action) {
-        //
-        //     const eData = action.payload
-        //     const eDataId = action.payload.id
-        //     const found = state.task.filter((element) => element.id == eDataId);
-        //     console.log("id in the store", found);
-        //     console.log("edit data in store", eData);
-        //
-        //
-        // },
     },
 })
 
