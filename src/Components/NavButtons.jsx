@@ -121,11 +121,30 @@ export default function NavButtons() {
                             {errors.dueDate && <span>This field is required</span>}
                         </Form.Group>
                         <br/>
-                        <Form.Control
-                            type="number"
-                            {...register("timeSpent", {required: true})}
-                            placeholder={"Time Spent on Task in Hours"}
-                        />
+                        {/*<Form.Control*/}
+                        {/*    type="number"*/}
+                        {/*    {...register("timeSpent", {required: true})}*/}
+                        {/*    placeholder={"Time Spent on Task in Hours"}*/}
+                        {/*/>*/}
+
+                            <Form.Control
+                                type="number"
+                                {...register("timeSpent", {
+                                    required: true,
+                                    min: {
+                                        value: 1,
+                                        message: "Time spent cannot be less than 0"
+                                    }
+                                })}
+                                placeholder="Time Spent on Task in Hours"
+                                min="1" // Set the minimum value to 0
+                            />
+
+
+
+
+
+
                         <br/>
 
                         <Form.Group>

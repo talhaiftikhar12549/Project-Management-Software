@@ -9,6 +9,7 @@ import {DragDropContext} from 'react-beautiful-dnd';
 
 export default function MainBoard() {
     const today = new Date().toISOString().split('T')[0];
+
     //drag and drop start
     function allowDrop(ev) {
         ev.preventDefault();
@@ -186,16 +187,6 @@ export default function MainBoard() {
                                         {errors.editDescription && <span>This field is required</span>}
                                     </Form.Group>
 
-                                    {/*<Form.Group>*/}
-                                    {/*    <Form.Label>Due Date</Form.Label>*/}
-                                    {/*    <Form.Control*/}
-                                    {/*        type="date"*/}
-                                    {/*        {...register("dueDate", {required: true})}*/}
-                                    {/*        placeholder="Due Date"*/}
-                                    {/*    />*/}
-                                    {/*    {errors.editDueDate && <span>This field is required</span>}*/}
-                                    {/*</Form.Group>*/}
-
 
                                     <Form.Group>
                                         <Form.Label>Due Date</Form.Label>
@@ -207,8 +198,6 @@ export default function MainBoard() {
                                         />
                                         {errors.dueDate && <span>This field is required</span>}
                                     </Form.Group>
-
-
 
 
                                     <Form.Group>
@@ -233,10 +222,17 @@ export default function MainBoard() {
                                         <Form.Label>Time Spent</Form.Label>
                                         <Form.Control
                                             type="number"
-                                            {...register("timeSpent", {required: true})}
+                                            {...register("timeSpent", {
+                                                required: true,
+                                                min: {
+                                                    value: 1,
+                                                    message: "Time spent cannot be less than 0"
+                                                }
+                                            })}
                                             placeholder="Time Spent"
+                                            min="1" // Set the minimum value to 0
                                         />
-                                        {errors.editTimeSpent && <span>This field is required</span>}
+                                        {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
                                     </Form.Group>
 
 
