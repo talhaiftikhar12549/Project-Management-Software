@@ -12,7 +12,7 @@ import {useForm} from "react-hook-form";
 export default function NavButtons() {
     const count = useSelector((state) => state.counter.value)
     const dispatch = useDispatch()
-
+    const today = new Date().toISOString().split('T')[0];
 
     //Download Button Start
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
@@ -115,8 +115,10 @@ export default function NavButtons() {
                             <Form.Control
                                 type="date"
                                 {...register("dueDate", {required: true})}
-                                placeholder={"Due Date"}
+                                placeholder="Due Date"
+                                min={today} // Set the minimum date to today's date
                             />
+                            {errors.dueDate && <span>This field is required</span>}
                         </Form.Group>
                         <br/>
                         <Form.Control

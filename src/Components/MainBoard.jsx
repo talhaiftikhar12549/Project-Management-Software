@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import {DragDropContext} from 'react-beautiful-dnd';
 
 export default function MainBoard() {
+    const today = new Date().toISOString().split('T')[0];
     //drag and drop start
     function allowDrop(ev) {
         ev.preventDefault();
@@ -185,15 +186,30 @@ export default function MainBoard() {
                                         {errors.editDescription && <span>This field is required</span>}
                                     </Form.Group>
 
+                                    {/*<Form.Group>*/}
+                                    {/*    <Form.Label>Due Date</Form.Label>*/}
+                                    {/*    <Form.Control*/}
+                                    {/*        type="date"*/}
+                                    {/*        {...register("dueDate", {required: true})}*/}
+                                    {/*        placeholder="Due Date"*/}
+                                    {/*    />*/}
+                                    {/*    {errors.editDueDate && <span>This field is required</span>}*/}
+                                    {/*</Form.Group>*/}
+
+
                                     <Form.Group>
                                         <Form.Label>Due Date</Form.Label>
                                         <Form.Control
                                             type="date"
                                             {...register("dueDate", {required: true})}
                                             placeholder="Due Date"
+                                            min={today} // Set the minimum date to today's date
                                         />
-                                        {errors.editDueDate && <span>This field is required</span>}
+                                        {errors.dueDate && <span>This field is required</span>}
                                     </Form.Group>
+
+
+
 
                                     <Form.Group>
                                         <Form.Label>Assignee</Form.Label>
