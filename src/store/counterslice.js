@@ -56,7 +56,7 @@ export const counterSlice = createSlice({
         },
         addTask: (state, action) => {
             const data = action.payload
-            const newData = { id:uuidv4(), ...data }
+            const newData = {id: uuidv4(), ...data}
             let reqData = [...state.task];
             reqData.unshift(newData);
             console.log('Payload received in addTask:', newData);
@@ -76,16 +76,42 @@ export const counterSlice = createSlice({
         importFile(state, action) {
             const newFileData = action.payload
             console.log(newFileData)
-            // state.task.unshift(newFileData)
             state.task = newFileData
             console.log(state.task)
-            // debugger
+
 
         },
+        editData: (state, action) => {
+            const updatedTask = action.payload;
+            const index = state.task.findIndex(task => task.id === updatedTask.id);
+console.log("index",index)
+            if (index !== -1) {
+                state.task[index] = { ...updatedTask };
+            }
+            debugger
+        },
+        // editData(state, action) {
+        //
+        //     const eData = action.payload
+        //     const eDataId = action.payload.id
+        //     const found = state.task.filter((element) => element.id == eDataId);
+        //     console.log("id in the store", found);
+        //     console.log("edit data in store", eData);
+        //
+        //
+        // },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {increment, decrement, incrementByAmount, addTask, downloadJson, importFile} = counterSlice.actions
+export const {
+    increment,
+    decrement,
+    incrementByAmount,
+    addTask,
+    downloadJson,
+    importFile,
+    editData
+} = counterSlice.actions
 
 export default counterSlice.reducer
