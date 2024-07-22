@@ -65,21 +65,22 @@ export default function NavButtons() {
     return (
         <>
             {/*Button Bar Start*/}
+            <div className={"bg-body-tertiary d-flex justify-content-center p-2"}><h5>Project Management Software</h5></div>
             <Navbar className="bg-body-tertiary justify-content-between px-5">
                 <div>
-                    <Button type="submit" onClick={handleShow}>Add Task</Button>
+                    <Button type="submit" onClick={handleShow}>Add Tasks</Button>
                 </div>
                 <div>
                     <Row>
                         <Col xs="auto">
                             <button className={"btn btn-primary"} onClick={triggerFileInput}>
-                                Import file
+                                Import Tasks
                             </button>
                             <input type={"file"} ref={fileInputRef} onChange={handleFileUpload}
                                    style={{display: "none",}}/>
                         </Col>
                         <Col xs="auto">
-                            <Button type="submit" onClick={() => dispatch(downloadJson())}>Download</Button>
+                            <Button type="submit" onClick={() => dispatch(downloadJson())}>Export Tasks</Button>
                         </Col>
                     </Row>
                 </div>
