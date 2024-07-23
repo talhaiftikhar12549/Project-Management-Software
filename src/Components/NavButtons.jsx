@@ -66,7 +66,7 @@ export default function NavButtons() {
         <>
             {/*Button Bar Start*/}
             <div className={"bg-body-tertiary d-flex justify-content-center p-2"}><h5>Project Management Software</h5></div>
-            <Navbar className="bg-body-tertiary justify-content-between px-5">
+            <Navbar className="bg-body-tertiary justify-content-between px-5 w-100">
                 <div>
                     <Button type="submit" onClick={handleShow}>Add Tasks</Button>
                 </div>
@@ -133,12 +133,12 @@ export default function NavButtons() {
                                 {...register("timeSpent", {
                                     required: true,
                                     min: {
-                                        value: 1,
+                                        value: 0,
                                         message: "Time spent cannot be less than 0"
                                     }
                                 })}
                                 placeholder="Time Spent on Task in Hours"
-                                min="1" // Set the minimum value to 0
+                                min="0" // Set the minimum value to 0
                             />
 
 
@@ -150,17 +150,35 @@ export default function NavButtons() {
 
                         <Form.Group>
                             <Form.Label>Priority</Form.Label>
-                            <select
-                                {...register("priority", {required: true})}
-                                style={{padding: '5px 50px', borderRadius: '5px', width: '100%'}}
-                            >
-                                <option disabled value="">Select your Priority</option>
-                                <option value="Low">Low</option>
-                                <option value="High">High</option>
-                                <option value="Urgent">Urgent</option>
-                            </select>
+                            <div style={{ padding: '5px 50px', borderRadius: '5px', width: '100%' }}>
+                                <label style={{ marginRight: '10px' }}>
+                                    <input
+                                        type="radio"
+                                        value="Low"
+                                        {...register("priority", { required: true })}
+                                    />
+                                    Low
+                                </label>
+                                <label style={{ marginRight: '10px' }}>
+                                    <input
+                                        type="radio"
+                                        value="High"
+                                        {...register("priority", { required: true })}
+                                    />
+                                    High
+                                </label>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        value="Urgent"
+                                        {...register("priority", { required: true })}
+                                    />
+                                    Urgent
+                                </label>
+                            </div>
                             {errors.priority && <span>This field is required</span>}
                         </Form.Group>
+
                     </form>
                 </Modal.Body>
                 <Modal.Footer>

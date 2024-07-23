@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {useSelector, useDispatch} from 'react-redux';
-import {editData} from '../store/counterslice';
+import React, { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { editData } from '../store/counterslice';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import {useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 
 export default function MainBoard() {
@@ -23,14 +23,14 @@ export default function MainBoard() {
     const handleDrop = (e, status) => {
         e.preventDefault();
         const taskId = e.dataTransfer.getData("text/plain");
-        dispatch(editData({id: taskId, status})); // Dispatch action to update task status
+        dispatch(editData({ id: taskId, status })); // Dispatch action to update task status
     };
 
     const handleDragOver = (e) => {
         e.preventDefault();
     };
 
-    const {register, handleSubmit, setValue, formState: {errors}} = useForm();
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm();
     const taskData = useSelector((state) => state.counter.task);
 
     const [show, setShow] = useState(false);
@@ -74,17 +74,17 @@ export default function MainBoard() {
                  onClick={() => handleShow(task)}
                  onDragStart={(e) => handleDragStart(e, task.id)}
                  onDragEnd={handleDragEnd}
-                 style={{backgroundColor: bgColor(task.priority)}}>
+                 style={{ backgroundColor: bgColor(task.priority) }}>
                 <div className="d-flex">
-                    <div style={{width: '80%'}}>
-                        <p style={{margin: '0px', textAlign: 'left'}}>{task.name}</p>
-                        <p style={{margin: '0px', textAlign: 'left'}}>Priority: {task.priority}</p>
+                    <div style={{ width: '80%' }}>
+                        <p style={{ margin: '0px', textAlign: 'left' }}>{task.name}</p>
+                        <p style={{ margin: '0px', textAlign: 'left' }}>Priority: {task.priority}</p>
                     </div>
-                    <div style={{width: '20%', paddingRight: '4px', textAlign: 'left'}}>
+                    <div style={{ width: '20%', paddingRight: '4px', textAlign: 'left' }}>
                         {task.timeSpent}h
                     </div>
                 </div>
-                <div className="font-weight-normal" style={{borderTop: '1px solid darkgrey', textAlign: 'left'}}>
+                <div className="font-weight-normal" style={{ borderTop: '1px solid darkgrey', textAlign: 'left' }}>
                     {task.assignee}
                 </div>
             </div>
@@ -107,29 +107,26 @@ export default function MainBoard() {
     return (
         <>
             <div className="text-center">
-                <div className="row">
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
+                <div className="row" style={{ height: '100vh', overflowY: 'auto' }}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
                         {renderTasks("Back log")}
                     </div>
-                    <div id="div2" className="col py-2 h-100" onDrop={(e) => handleDrop(e, "Open")}
-                         onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Open")} onDragOver={handleDragOver}>
                         {renderTasks("Open")}
                     </div>
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "New")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "New")} onDragOver={handleDragOver}>
                         {renderTasks("New")}
                     </div>
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "In Progress")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "In Progress")} onDragOver={handleDragOver}>
                         {renderTasks("In Progress")}
                     </div>
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "FeedBack Needed")}
-                         onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "FeedBack Needed")} onDragOver={handleDragOver}>
                         {renderTasks("FeedBack Needed")}
                     </div>
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "Ready For Testing")}
-                         onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Ready For Testing")} onDragOver={handleDragOver}>
                         {renderTasks("Ready For Testing")}
                     </div>
-                    <div className="col py-2" onDrop={(e) => handleDrop(e, "QA In Progress")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "QA In Progress")} onDragOver={handleDragOver}>
                         {renderTasks("QA In Progress")}
                     </div>
                 </div>
@@ -167,10 +164,10 @@ export default function MainBoard() {
                             </Modal.Header>
                             <Modal.Body>
                                 <Form onSubmit={handleSubmit(editSubmit)}>
-                                    <Form.Group style={{display: "none"}}>
+                                    <Form.Group style={{ display: "none" }}>
                                         <Form.Label>ID</Form.Label>
                                         <Form.Control
-                                            {...register("id", {required: true})}
+                                            {...register("id", { required: true })}
                                             placeholder="ID"
                                         />
                                         {errors.editName && <span>This field is required</span>}
@@ -178,7 +175,7 @@ export default function MainBoard() {
                                     <Form.Group>
                                         <Form.Label>Name</Form.Label>
                                         <Form.Control
-                                            {...register("name", {required: true})}
+                                            {...register("name", { required: true })}
                                             placeholder="Name"
                                         />
                                         {errors.editName && <span>This field is required</span>}
@@ -187,7 +184,7 @@ export default function MainBoard() {
                                     <Form.Group>
                                         <Form.Label>Description</Form.Label>
                                         <Form.Control
-                                            {...register("description", {required: true})}
+                                            {...register("description", { required: true })}
                                             placeholder="Description"
                                         />
                                         {errors.editDescription && <span>This field is required</span>}
@@ -197,7 +194,7 @@ export default function MainBoard() {
                                         <Form.Label>Due Date</Form.Label>
                                         <Form.Control
                                             type="date"
-                                            {...register("dueDate", {required: true})}
+                                            {...register("dueDate", { required: true })}
                                             placeholder="Due Date"
                                             min={today} // Set the minimum date to today's date
                                         />
@@ -207,16 +204,16 @@ export default function MainBoard() {
                                     <Form.Group>
                                         <Form.Label>Assignee</Form.Label>
                                         <Form.Control
-                                            {...register("assignee", {required: true})}
+                                            {...register("assignee", { required: true })}
                                             placeholder="Assignee"
                                         />
                                         {errors.editAssignee && <span>This field is required</span>}
                                     </Form.Group>
 
-                                    <Form.Group style={{display: "none"}}>
+                                    <Form.Group style={{ display: "none" }}>
                                         <Form.Label>Status</Form.Label>
                                         <Form.Control
-                                            {...register("status", {required: true})}
+                                            {...register("status", { required: true })}
                                             placeholder="Status"
                                         />
                                         {errors.editStatus && <span>This field is required</span>}
@@ -229,27 +226,44 @@ export default function MainBoard() {
                                             {...register("timeSpent", {
                                                 required: true,
                                                 min: {
-                                                    value: 1,
+                                                    value: 0,
                                                     message: "Time spent cannot be less than 0"
                                                 }
                                             })}
                                             placeholder="Time Spent"
-                                            min="1" // Set the minimum value to 0
+                                            min="0" // Set the minimum value to 0
                                         />
                                         {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
                                     </Form.Group>
 
                                     <Form.Group>
                                         <Form.Label>Priority</Form.Label>
-                                        <select
-                                            {...register("priority", {required: true})}
-                                            style={{padding: '5px 50px', borderRadius: '5px', width: '100%'}}
-                                        >
-                                            <option disabled value="">Select your Priority</option>
-                                            <option value="Low">Low</option>
-                                            <option value="High">High</option>
-                                            <option value="Urgent">Urgent</option>
-                                        </select>
+                                        <div style={{ padding: '5px 50px', borderRadius: '5px', width: '100%' }}>
+                                            <label style={{ marginRight: '10px' }}>
+                                                <input
+                                                    type="radio"
+                                                    value="Low"
+                                                    {...register("priority", { required: true })}
+                                                />
+                                                Low
+                                            </label>
+                                            <label style={{ marginRight: '10px' }}>
+                                                <input
+                                                    type="radio"
+                                                    value="High"
+                                                    {...register("priority", { required: true })}
+                                                />
+                                                High
+                                            </label>
+                                            <label>
+                                                <input
+                                                    type="radio"
+                                                    value="Urgent"
+                                                    {...register("priority", { required: true })}
+                                                />
+                                                Urgent
+                                            </label>
+                                        </div>
                                         {errors.priority && <span>This field is required</span>}
                                     </Form.Group>
 
