@@ -65,7 +65,8 @@ export default function NavButtons() {
     return (
         <>
             {/*Button Bar Start*/}
-            <div className={"bg-body-tertiary d-flex justify-content-center p-2"}><h5>Project Management Software</h5></div>
+            <div className={"bg-body-tertiary d-flex justify-content-center p-2"}><h5>Project Management Software</h5>
+            </div>
             <Navbar className="bg-body-tertiary justify-content-between px-5 w-100">
                 <div>
                     <Button type="submit" onClick={handleShow}>Add Tasks</Button>
@@ -128,42 +129,38 @@ export default function NavButtons() {
                         {/*    placeholder={"Time Spent on Task in Hours"}*/}
                         {/*/>*/}
 
-                            <Form.Control
-                                type="number"
-                                {...register("timeSpent", {
-                                    required: true,
-                                    min: {
-                                        value: 0,
-                                        message: "Time spent cannot be less than 0"
-                                    }
-                                })}
-                                placeholder="Time Spent on Task in Hours"
-                                min="0" // Set the minimum value to 0
-                            />
-
-
-
-
-
+                        <Form.Control
+                            type="number"
+                            {...register("timeSpent", {
+                                required: true,
+                                min: {
+                                    value: 0,
+                                    message: "Time spent cannot be less than 0"
+                                }
+                            })}
+                            placeholder="Time Spent on Task in Hours"
+                            min="0" // Set the minimum value to 0
+                        />
+                        
 
                         <br/>
 
                         <Form.Group>
                             <Form.Label>Priority</Form.Label>
-                            <div style={{ padding: '5px 50px', borderRadius: '5px', width: '100%' }}>
-                                <label style={{ marginRight: '10px' }}>
+                            <div style={{padding: '5px 50px', borderRadius: '5px', width: '100%'}}>
+                                <label style={{marginRight: '10px'}}>
                                     <input
                                         type="radio"
                                         value="Low"
-                                        {...register("priority", { required: true })}
+                                        {...register("priority", {required: true})}
                                     />
                                     Low
                                 </label>
-                                <label style={{ marginRight: '10px' }}>
+                                <label style={{marginRight: '10px'}}>
                                     <input
                                         type="radio"
                                         value="High"
-                                        {...register("priority", { required: true })}
+                                        {...register("priority", {required: true})}
                                     />
                                     High
                                 </label>
@@ -171,7 +168,7 @@ export default function NavButtons() {
                                     <input
                                         type="radio"
                                         value="Urgent"
-                                        {...register("priority", { required: true })}
+                                        {...register("priority", {required: true})}
                                     />
                                     Urgent
                                 </label>

@@ -230,11 +230,13 @@ export default function MainBoard() {
                                                     message: "Time spent cannot be less than 0"
                                                 }
                                             })}
-                                            placeholder="Time Spent"
+                                            placeholder="Time Spent on Task in Hours"
                                             min="0" // Set the minimum value to 0
+                                            step="any" // Allow any decimal number
                                         />
                                         {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
                                     </Form.Group>
+
 
                                     <Form.Group>
                                         <Form.Label>Priority</Form.Label>

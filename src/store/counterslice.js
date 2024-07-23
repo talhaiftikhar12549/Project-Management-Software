@@ -62,15 +62,6 @@ export const counterSlice = createSlice({
             }
 
             const uniqueTasks = filterUniqueTasks(mergeData);
-            // state.form = uniqueTasks;
-            //
-            //
-            //
-            //
-            //
-            //
-            //
-            // const newFileData = action.payload;
             state.task = uniqueTasks;
             const localData = JSON.stringify(state.task);
             localStorage.setItem("localData", localData);
