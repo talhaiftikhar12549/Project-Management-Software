@@ -86,26 +86,26 @@ export const counterSlice = createSlice({
                 qaInProgress: 0,
             };
             state.task.forEach(item => {
-                switch (item.columnId) {
-                    case 1:
+                switch (item.state) {
+                    case "Back log":
                         state.taskInColumn.backlog += 1;
                         break;
-                    case 2:
+                    case "Open":
                         state.taskInColumn.open += 1;
                         break;
-                    case 3:
+                    case "New":
                         state.taskInColumn.new += 1;
                         break;
-                    case 4:
+                    case "In Progress":
                         state.taskInColumn.inProgress += 1;
                         break;
-                    case 5:
+                    case "FeedBack Needed":
                         state.taskInColumn.feedBackNeeded += 1;
                         break;
-                    case 6:
+                    case "Ready For Testing":
                         state.taskInColumn.readyForTesting += 1;
                         break;
-                    case 7:
+                    case "QA In Progress":
                         state.taskInColumn.qaInProgress += 1;
                         break;
                     default:
