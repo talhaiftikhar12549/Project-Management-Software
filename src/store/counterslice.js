@@ -19,15 +19,6 @@ export const counterSlice = createSlice({
     name: 'counter',
     initialState,
     reducers: {
-        increment: (state) => {
-            state.value += 1;
-        },
-        decrement: (state) => {
-            state.value -= 1;
-        },
-        incrementByAmount: (state, action) => {
-            state.value += action.payload;
-        },
         addTask: (state, action) => {
             const data = action.payload;
             const newData = {id: uuidv4(), status: "Back log", ...data};
@@ -36,6 +27,48 @@ export const counterSlice = createSlice({
             state.task = reqData; // Adding task to the array
             const localData = JSON.stringify(state.task);
             localStorage.setItem("localData", localData);
+
+            //
+
+            state.taskInColumn = {
+                backlog: 0,
+                open: 0,
+                new: 0,
+                inProgress: 0,
+                feedBackNeeded: 0,
+                readyForTesting: 0,
+                qaInProgress: 0,
+            };
+            state.task.forEach(item => {
+                switch (item.status) {
+                    case 'Back log':
+                        state.taskInColumn.backlog += 1;
+                        break;
+                    case 'Open':
+                        state.taskInColumn.open += 1;
+                        break;
+                    case 'New':
+                        state.taskInColumn.new += 1;
+                        break;
+                    case 'In Progress':
+                        state.taskInColumn.inProgress += 1;
+                        break;
+                    case 'FeedBack Needed':
+                        state.taskInColumn.feedBackNeeded += 1;
+                        break;
+                    case 'Ready For Testing':
+                        state.taskInColumn.readyForTesting += 1;
+                        break;
+                    case 'QA In Progress':
+                        state.taskInColumn.qaInProgress += 1;
+                        break;
+                    default:
+                        console.log('Unknown columnId:', item.columnId);
+                        debugger
+                }
+            });
+            console.log('Task counts:', state.taskInColumn);
+            localStorage.setItem("Task counts", JSON.stringify(state.taskInColumn));
         },
         downloadJson: (state) => {
             const jsonString = JSON.stringify(state.task, null, 2);
@@ -65,17 +98,9 @@ export const counterSlice = createSlice({
             state.task = uniqueTasks;
             const localData = JSON.stringify(state.task);
             localStorage.setItem("localData", localData);
-        },
-        editData: (state, action) => {
-            const updatedTask = action.payload;
-            const index = state.task.findIndex((task) => task.id === updatedTask.id);
-            if (index !== -1) {
-                state.task[index] = {...state.task[index], ...updatedTask};
-                const localData = JSON.stringify(state.task);
-                localStorage.setItem("localData", localData);
-            }
-        },
-        taskCount: (state) => {
+
+            //
+
             state.taskInColumn = {
                 backlog: 0,
                 open: 0,
@@ -86,35 +111,88 @@ export const counterSlice = createSlice({
                 qaInProgress: 0,
             };
             state.task.forEach(item => {
-                switch (item.state) {
-                    case "Back log":
+                switch (item.status) {
+                    case 'Back log':
                         state.taskInColumn.backlog += 1;
                         break;
-                    case "Open":
+                    case 'Open':
                         state.taskInColumn.open += 1;
                         break;
-                    case "New":
+                    case 'New':
                         state.taskInColumn.new += 1;
                         break;
-                    case "In Progress":
+                    case 'In Progress':
                         state.taskInColumn.inProgress += 1;
                         break;
-                    case "FeedBack Needed":
+                    case 'FeedBack Needed':
                         state.taskInColumn.feedBackNeeded += 1;
                         break;
-                    case "Ready For Testing":
+                    case 'Ready For Testing':
                         state.taskInColumn.readyForTesting += 1;
                         break;
-                    case "QA In Progress":
+                    case 'QA In Progress':
                         state.taskInColumn.qaInProgress += 1;
                         break;
                     default:
                         console.log('Unknown columnId:', item.columnId);
+                        debugger
                 }
             });
             console.log('Task counts:', state.taskInColumn);
             localStorage.setItem("Task counts", JSON.stringify(state.taskInColumn));
-        }
+        },
+        editData: (state, action) => {
+            const updatedTask = action.payload;
+            const index = state.task.findIndex((task) => task.id === updatedTask.id);
+            if (index !== -1) {
+                state.task[index] = {...state.task[index], ...updatedTask};
+                const localData = JSON.stringify(state.task);
+                localStorage.setItem("localData", localData);
+
+                //
+
+                state.taskInColumn = {
+                    backlog: 0,
+                    open: 0,
+                    new: 0,
+                    inProgress: 0,
+                    feedBackNeeded: 0,
+                    readyForTesting: 0,
+                    qaInProgress: 0,
+                };
+                state.task.forEach(item => {
+                    switch (item.status) {
+                        case 'Back log':
+                            state.taskInColumn.backlog += 1;
+                            break;
+                        case 'Open':
+                            state.taskInColumn.open += 1;
+                            break;
+                        case 'New':
+                            state.taskInColumn.new += 1;
+                            break;
+                        case 'In Progress':
+                            state.taskInColumn.inProgress += 1;
+                            break;
+                        case 'FeedBack Needed':
+                            state.taskInColumn.feedBackNeeded += 1;
+                            break;
+                        case 'Ready For Testing':
+                            state.taskInColumn.readyForTesting += 1;
+                            break;
+                        case 'QA In Progress':
+                            state.taskInColumn.qaInProgress += 1;
+                            break;
+                        default:
+                            console.log('Unknown columnId:', item.columnId);
+                            debugger
+                    }
+                });
+                console.log('Task counts:', state.taskInColumn);
+                localStorage.setItem("Task counts", JSON.stringify(state.taskInColumn));
+
+            }
+        },
     },
 });
 
@@ -126,6 +204,7 @@ export const {
     downloadJson,
     importFile,
     editData,
+
 } = counterSlice.actions;
 
 export default counterSlice.reducer;
