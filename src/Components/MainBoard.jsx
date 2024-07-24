@@ -224,15 +224,24 @@ export default function MainBoard() {
                                         <Form.Control
                                             type="number"
                                             {...register("timeSpent", {
-                                                required: true,
+                                                required: "Time spent is required",
                                                 min: {
                                                     value: 0,
                                                     message: "Time spent cannot be less than 0"
+                                                },
+                                                validate: {
+                                                    // Validate that the number has at most one decimal place
+                                                    decimalPlaces: (value) => {
+                                                        if (value && !/^\d+(\.\d{1})?$/.test(value)) {
+                                                            return "Time spent must have at most one decimal place";
+                                                        }
+                                                        return true;
+                                                    }
                                                 }
                                             })}
                                             placeholder="Time Spent on Task in Hours"
                                             min="0" // Set the minimum value to 0
-                                            step="any" // Allow any decimal number
+                                            step="0.1" // Allow numbers with one decimal place
                                         />
                                         {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
                                     </Form.Group>
