@@ -196,7 +196,7 @@ export default function NavButtons() {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSubmit(onSubmit)}>
-                        Save Changes
+                        Add Task
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -109,6 +109,9 @@ export default function MainBoard() {
             <div className="text-center">
                 <div className="row" style={{ height: '100vh', overflowY: 'auto' }}>
                     <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
+                        <form className="form-inline my-2 my-lg-0">
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                        </form>
                         {renderTasks("Back log")}
                     </div>
                     <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Open")} onDragOver={handleDragOver}>
@@ -226,7 +229,7 @@ export default function MainBoard() {
                                             {...register("timeSpent", {
                                                 required: "Time spent is required",
                                                 min: {
-                                                    value: 0,
+                                                    value: 0.1,
                                                     message: "Time spent cannot be less than 0"
                                                 },
                                                 validate: {
