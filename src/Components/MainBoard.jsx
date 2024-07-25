@@ -77,7 +77,9 @@ export default function MainBoard() {
                  style={{ backgroundColor: bgColor(task.priority) }}>
                 <div className="d-flex">
                     <div style={{ width: '80%' }}>
-                        <p style={{ margin: '0px', textAlign: 'left' }}>{task.name}</p>
+                        <p style={{ margin: '0px', textAlign: 'left' }}>
+                            {task.name.length > 20 ? `${task.name.substring(0, 20)}...` : task.name}
+                        </p>
                         <p style={{ margin: '0px', textAlign: 'left' }}>Priority: {task.priority}</p>
                     </div>
                     <div style={{ width: '20%', paddingRight: '4px', textAlign: 'left' }}>
@@ -85,7 +87,10 @@ export default function MainBoard() {
                     </div>
                 </div>
                 <div className="font-weight-normal" style={{ borderTop: '1px solid darkgrey', textAlign: 'left' }}>
-                    {task.assignee}
+
+                    <p>
+                        {task.assignee.length>12 ? `${task.assignee.substring(0, 12)}...` : task.assignee}
+                    </p>
                 </div>
             </div>
         ));
@@ -230,13 +235,17 @@ export default function MainBoard() {
                                                 required: "Time spent is required",
                                                 min: {
                                                     value: 0.1,
-                                                    message: "Time spent cannot be less than 0"
+                                                    message: "Time spent cannot be less than 0.1"
+                                                },
+                                                max: {
+                                                    value: 999,
+                                                    message: "Time spent cannot be more than 999"
                                                 },
                                                 validate: {
                                                     // Validate that the number has at most one decimal place
                                                     decimalPlaces: (value) => {
-                                                        if (value && !/^\d+(\.\d{1})?$/.test(value)) {
-                                                            return "Time spent must have at most one decimal place";
+                                                        if (value && !/^\d{1,3}(\.\d{1})?$/.test(value)) {
+                                                            return "Time spent must be a number with at most one decimal place";
                                                         }
                                                         return true;
                                                     }
@@ -244,6 +253,7 @@ export default function MainBoard() {
                                             })}
                                             placeholder="Time Spent on Task in Hours"
                                             min="0" // Set the minimum value to 0
+                                            max="999" // Set the maximum value to 999
                                             step="0.1" // Allow numbers with one decimal place
                                         />
                                         {errors.timeSpent && <span>{errors.timeSpent.message}</span>}

@@ -135,8 +135,12 @@ export default function NavButtons() {
                                     {...register("timeSpent", {
                                         required: "Time spent is required",
                                         min: {
-                                            value: 0,
-                                            message: "Time spent cannot be less than 0"
+                                            value: 0.1,
+                                            message: "Time spent cannot be less than 0.1"
+                                        },
+                                        max: {
+                                            value: 999,
+                                            message: "Time spent cannot be more than 999"
                                         },
                                         validate: {
                                             // Validate that the number has at most one decimal place
@@ -150,6 +154,7 @@ export default function NavButtons() {
                                     })}
                                     placeholder="Time Spent on Task in Hours"
                                     min="0" // Set the minimum value to 0
+                                    max="999" // Set the maximum value to 999
                                     step="0.1" // Allow numbers with one decimal place
                                 />
                                 {errors.timeSpent && <span>{errors.timeSpent.message}</span>}
