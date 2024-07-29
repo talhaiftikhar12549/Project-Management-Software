@@ -10,6 +10,7 @@ export default function MainBoard() {
     const today = new Date().toISOString().split('T')[0];
 
     const [dropIndicator, setDropIndicator] = useState(null);
+    const [searchQuery, setSearchQuery] = useState(""); // New state for search query
     const dispatch = useDispatch();
 
     const handleDragStart = (e, taskId) => {
@@ -68,16 +69,29 @@ export default function MainBoard() {
         ehandleShow();
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredTasks = (status) => {
+        return taskData.filter(task =>
+            task.status === status &&
+            (task.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                task.assignee.toLowerCase().includes(searchQuery.toLowerCase()))
+        );
+    };
+
     const renderTasks = (status) => {
-        return taskData.filter(task => task.status === status).map((task) => (
+        return filteredTasks(status).map((task) => (
             <div draggable="true" className="border py-1 my-1" key={task.id}
                  onClick={() => handleShow(task)}
                  onDragStart={(e) => handleDragStart(e, task.id)}
                  onDragEnd={handleDragEnd}
                  style={{ backgroundColor: bgColor(task.priority) }}>
-                <div className="d-flex">
+                <div className="d-flex ">
                     <div style={{ width: '80%' }}>
-                        <p style={{ margin: '0px', textAlign: 'left' }}>
+                        <p style={{ margin: '0px', textAlign: 'left', padding: '4px' }}>
                             {task.name.length > 20 ? `${task.name.substring(0, 20)}...` : task.name}
                         </p>
                         <p style={{ margin: '0px', textAlign: 'left' }}>Priority: {task.priority}</p>
@@ -89,7 +103,7 @@ export default function MainBoard() {
                 <div className="font-weight-normal" style={{ borderTop: '1px solid darkgrey', textAlign: 'left' }}>
 
                     <p>
-                        {task.assignee.length>12 ? `${task.assignee.substring(0, 12)}...` : task.assignee}
+                        {task.assignee.length > 12 ? `${task.assignee.substring(0, 12)}...` : task.assignee}
                     </p>
                 </div>
             </div>
@@ -113,28 +127,36 @@ export default function MainBoard() {
         <>
             <div className="text-center">
                 <div className="row" style={{ height: '100vh', overflowY: 'auto' }}>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "Back log")} onDragOver={handleDragOver}>
                         <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+                            <input className="form-control mr-sm-2" type="search" placeholder="Search"
+                                   aria-label="Search" value={searchQuery} onChange={handleSearchChange} />
                         </form>
                         {renderTasks("Back log")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Open")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "Open")} onDragOver={handleDragOver}>
                         {renderTasks("Open")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "New")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "New")} onDragOver={handleDragOver}>
                         {renderTasks("New")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "In Progress")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "In Progress")} onDragOver={handleDragOver}>
                         {renderTasks("In Progress")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "FeedBack Needed")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "FeedBack Needed")} onDragOver={handleDragOver}>
                         {renderTasks("FeedBack Needed")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "Ready For Testing")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "Ready For Testing")} onDragOver={handleDragOver}>
                         {renderTasks("Ready For Testing")}
                     </div>
-                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }} onDrop={(e) => handleDrop(e, "QA In Progress")} onDragOver={handleDragOver}>
+                    <div className="col py-2 d-flex flex-column" style={{ height: '100%' }}
+                         onDrop={(e) => handleDrop(e, "QA In Progress")} onDragOver={handleDragOver}>
                         {renderTasks("QA In Progress")}
                     </div>
                 </div>
