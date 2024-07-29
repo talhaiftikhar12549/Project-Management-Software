@@ -47,8 +47,18 @@ export default function NavButtons() {
             reader.onload = (e) => {
                 try {
                     const json = JSON.parse(e.target.result);
+                    console.log(json)
+
                     // Assuming the JSON structure matches your `form` structure
-                    dispatch(importFile(json))
+                    if(json[0].timeSpent)
+                    {
+                        dispatch(importFile(json))
+                    }
+                    else
+                    {
+                        alert("Please Use Valid Json Format")
+                    }
+
                     // this.$store.commit('setFormData', json);
                 } catch (error) {
                     console.error("Invalid JSON file");
