@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 
 const initialState = {
     value: 69,
+    PopupModalMessage: true,
     task: JSON.parse(localStorage.getItem('localData')) || [],
     taskInColumn: JSON.parse(localStorage.getItem('Task counts')) || {
         backlog: 0,
@@ -80,6 +81,11 @@ export const counterSlice = createSlice({
             link.click();
             document.body.removeChild(link);
         },
+        MessageModal: (state,action)=>{
+            const ans = action.payload
+              state.PopupModalMessage = ans
+        }
+        ,
         importFile: (state, action) => {
 
 
@@ -204,6 +210,7 @@ export const {
     downloadJson,
     importFile,
     editData,
+    MessageModal,
 
 } = counterSlice.actions;
 
