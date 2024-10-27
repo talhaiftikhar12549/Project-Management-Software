@@ -1,9 +1,9 @@
 import NavButtons from "./NavButtons";
 import NavBar from "./NavBar";
-import React, {useEffect, useState,} from 'react';
+import React, { useState,} from 'react';
 import PopupModal from "./PopupModal";
 export default function Header() {
-    const [show, setShow] = useState(false);
+    const [show] = useState(false);
 
     return (
         <>

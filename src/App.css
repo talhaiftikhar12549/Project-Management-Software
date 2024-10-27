@@ -1,7 +1,0 @@
-.App.rotate {
-    transform: rotate(90deg);
-    transform-origin: center;
-    overflow: hidden;
-    height: 200vw; /* To adjust height for the rotated content */
-    width: 100vh; /* To adjust width for the rotated content */
-}

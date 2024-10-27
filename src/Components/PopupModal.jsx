@@ -8,10 +8,7 @@ function PopupModal() {
     const popup = useSelector((state) => state.counter.PopupModalMessage)
     const dispatch = useDispatch()
     const handleClose = () => dispatch(MessageModal(false));
-    //
-    // useEffect(
-    //     ()=>{}
-    // )
+
     const checkScreenSize = () => {
         if (window.innerWidth <= 768) {
             dispatch(MessageModal(true));

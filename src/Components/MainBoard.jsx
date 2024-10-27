@@ -87,7 +87,10 @@ export default function MainBoard() {
             <div draggable="true" className="border py-1 my-1" key={task.id}
                  onClick={() => handleShow(task)}
                  onDragStart={(e) => handleDragStart(e, task.id)}
+                 // onTouchStart={(e) => handleDragStart(e, task.id)}
+                 // onTouchMove={(e) => handleDragStart(e, task.id)}
                  onDragEnd={handleDragEnd}
+                 // onTouchEnd={handleDragEnd}
                  style={{ backgroundColor: bgColor(task.priority) }}>
                 <div className="d-flex ">
                     <div style={{ width: '80%' }}>
