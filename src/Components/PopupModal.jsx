@@ -1,14 +1,32 @@
-import React from "react"
+import React, { memo,useEffect} from "react"
 import Modal from "react-bootstrap/Modal";
 import {useSelector, useDispatch} from 'react-redux'
 import {MessageModal} from '../store/counterslice'
-import Button from 'react-bootstrap/Button';
 
 function PopupModal() {
 
     const popup = useSelector((state) => state.counter.PopupModalMessage)
     const dispatch = useDispatch()
     const handleClose = () => dispatch(MessageModal(false));
+    //
+    // useEffect(
+    //     ()=>{}
+    // )
+    const checkScreenSize = () => {
+        if (window.innerWidth <= 768) {
+            dispatch(MessageModal(true));
+            console.log(window.innerWidth)
+        } else {
+            dispatch(MessageModal(false));
+        }
+    };
+
+    useEffect(() => {
+        checkScreenSize(); // Initial check on load
+        // window.addEventListener('resize', checkScreenSize);
+        // return () => window.removeEventListener('resize', checkScreenSize);
+    }, []);
+
     return (
         <>
             <Modal show={popup} onHide={handleClose} centered>
@@ -22,4 +40,4 @@ function PopupModal() {
 
 }
 
-export default PopupModal
+export default memo(PopupModal)
